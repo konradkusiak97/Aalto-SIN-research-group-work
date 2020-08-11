@@ -167,13 +167,13 @@ def newPPSTM_simple(myDict, paths, importData):
     # *****Output options ******
     #
     # True / False -- plot "png" images (2D constant height) #
-    PNG = True
+    # PNG = True
     # True / False -- write ".xyz" WSxM files (2D constant height) #
-    WSxM = False
-    XSF = False                 # True / False -- write ".xsf" files with 3D stucks of data . For this option you have to have "installed" PPAFM in your PPSTM directory #
-    NPY = False                 # True / False -- write ".npy" numpy binary files with 3D stucks of data . For this option you have to have "installed" PPAFM in your PPSTM directory #
+    # WSxM = False
+    # XSF = False                 # True / False -- write ".xsf" files with 3D stucks of data . For this option you have to have "installed" PPAFM in your PPSTM directory #
+    # NPY = False                 # True / False -- write ".npy" numpy binary files with 3D stucks of data . For this option you have to have "installed" PPAFM in your PPSTM directory #
     # True / False -- plot geometry (position of atoms into the PNG images and into the XSF files). You have to have your geometry, which you want to plot in input_plot.xyz. This doesn't change the name of the output files #
-    plot_atoms = True
+    # plot_atoms = True
     WorkFunction = 5.0          # 5.0 eV is standart #
     #
     #
@@ -201,14 +201,14 @@ def newPPSTM_simple(myDict, paths, importData):
         print("For XSF or NPY outputs or tip_type = relaxed you have to have installed PPAFM in your PPSTM directory ")
         import pyProbeParticle.GridUtils as GU
 
-    if (plot_atoms):
-        import pyPPSTM.basUtils as Bu
-        import pyPPSTM.elements as elements
+    
+    import pyPPSTM.basUtils as Bu
+    import pyPPSTM.elements as elements
     
     print("Libraries imported")
     # --- Initial check --- #
 
-    assert(PNG or WSxM or XSF or NPY), "No output set to be True; I'm not going to do anything if there is no output. I'm too lazy like a Gartfield. "
+    # assert(PNG or WSxM or XSF or NPY), "No output set to be True; I'm not going to do anything if there is no output. I'm too lazy like a Gartfield. "
 
     # --- specification of tip orbitals --- #
     # 's' ; 'pxy' -- px & py ; 'spxy' -- 50% s & 50% pxy ; '5spxy' -- 5% s & 95% pxy ; '10spxy' -- 10% s & 90% pxy ; 'CO' -- 13% s & 87% pxy (PRL 119, 166001 (2017)) ; 'pz' ; For sample_orbs = 'sp' , possible 'dz2' and 'dxzyz' -- dxz & dyz #

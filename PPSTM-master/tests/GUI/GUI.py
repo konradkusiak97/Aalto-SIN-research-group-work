@@ -158,27 +158,7 @@ class Window(QMainWindow):
         # Following are the variables from inputs. Kind of like private
         # Putting all the self variables to a dictionary
         # List of needed parameters:
-        self.myDict = {'dft_code': 'fireball',
-                       'sample_orbs': 'sp',
-                       'spin': 'None',
-                       'pbc': '00',
-                       'data_format': 'npy',
-                       'kValue': 0.5,
-                       'qValue': 0.0,
-                       'x': [0.0, 20.0, 0.25],
-                       'y': [0.0, 15.0, 0.25],
-                       'z': [10.0, 12.0, 0.1],
-                       'scan_type': 'v-scan',
-                       'etaValue': 0.1,
-                       'wf_decay': 0.5,
-                       'V': -0.5,
-                       'Vmax': 0.5,
-                       'dV': 0.1,
-                       'tipOrbS': 1.0,
-                       'tipOrbPxy': 0.0,
-                       'OMP_NUM_THREADS': 1,
-                       'tip_type': 'fixed',
-                       'tip_orb': 'pxy'}
+        self.myDict = {}
         self.importData = None
         self.plotData = None
 
@@ -225,7 +205,6 @@ class Window(QMainWindow):
         # codes scroll bar
         self.codes = QComboBox(); codesBox.addWidget(self.codes)
         self.codes.addItems(['fireball', 'gpaw', 'aims', 'cp2k'])
-        self.codes.setCurrentIndex(0)
         self.codes.currentIndexChanged[str].connect(self.selectCode)
         self.string_widgets['dft_code'] = self.codes
         
@@ -236,7 +215,6 @@ class Window(QMainWindow):
         # oribital scroll bar
         self.orbitals = QComboBox(); orbitalBox.addWidget(self.orbitals)
         self.orbitals.addItems(['sp', 'spd'])
-        #self.orbitals.setCurrentIndex(0)
         self.orbitals.currentIndexChanged[str].connect(self.selectOrbital)
         self.string_widgets['sample_orbs'] = self.orbitals
 
@@ -247,7 +225,6 @@ class Window(QMainWindow):
         # Spin scroll bar
         self.spin = QComboBox(); spinBox.addWidget(self.spin)
         self.spin.addItems(['None', 'both', 'alpha', 'beta'])
-        self.spin.setCurrentIndex(0)
         self.spin.currentIndexChanged[str].connect(self.selectSpin)
         self.string_widgets['spin'] = self.spin
 
@@ -303,21 +280,20 @@ class Window(QMainWindow):
         # Creating format scroll bar
         self.formatBar = QComboBox(); grl1.addWidget(self.formatBar);
         self.formatBar.addItems(['xsf', 'npy'])
-        self.formatBar.setCurrentIndex(1)
         self.formatBar.currentIndexChanged[str].connect(self.selectFormat)
         self.string_widgets['data_format'] = self.formatBar
 
         # Adding K number range
         grl1.addWidget(QLabel('             K: '))
         self.k = QDoubleSpinBox(); grl1.addWidget(self.k);
-        self.k.setRange(0.0, 2.0); self.k.setValue(0.5); self.k.setSingleStep(0.05)
+        self.k.setRange(0.0, 2.0); self.k.setSingleStep(0.05)
         self.k.valueChanged.connect(self.selectK)
         self.num_widgets['kValue'] = self.k
 
         # Adding Q number range
         grl1.addWidget(QLabel('             Q: '))
         self.q = QDoubleSpinBox(); grl1.addWidget(self.q);
-        self.q.setRange(0.0, 2.0); self.q.setValue(0.0); self.q.setSingleStep(0.05)
+        self.q.setRange(0.0, 2.0); self.q.setSingleStep(0.05)
         self.q.valueChanged.connect(self.selectQ)
         self.num_widgets['qValue'] = self.q
         
@@ -328,19 +304,19 @@ class Window(QMainWindow):
         # Adding Xmin number range
         grl2.addWidget(QLabel('         Xmin: '))
         self.xMin = QDoubleSpinBox(self); grl2.addWidget(self.xMin);
-        self.xMin.setRange(-50.0, 20.0); self.xMin.setValue(0.0); self.xMin.setSingleStep(0.05)
+        self.xMin.setRange(-50.0, 20.0); self.xMin.setSingleStep(0.05)
         self.xMin.valueChanged.connect(self.selectX)
 
         # Adding Xmax number range
         grl2.addWidget(QLabel('         Xmax: '))
         self.xMax = QDoubleSpinBox(); grl2.addWidget(self.xMax);
-        self.xMax.setRange(0.0, 50.0); self.xMax.setValue(20.0); self.xMax.setSingleStep(0.05)
+        self.xMax.setRange(0.0, 50.0); self.xMax.setSingleStep(0.05)
         self.xMax.valueChanged.connect(self.selectX)
 
         # Adding dX number range
         grl2.addWidget(QLabel('             dX: '))
         self.dx = QDoubleSpinBox(); grl2.addWidget(self.dx);
-        self.dx.setRange(0.0, 20.0); self.dx.setValue(0.25); self.dx.setSingleStep(0.05)
+        self.dx.setRange(0.0, 20.0); self.dx.setSingleStep(0.05)
         self.dx.valueChanged.connect(self.selectX)
 
     ############# grl3 - grid running layout 3 - Ymin, Ymax, dY ########################
@@ -350,19 +326,19 @@ class Window(QMainWindow):
         # Adding Ymin number range
         grl3.addWidget(QLabel('         Ymin: '))
         self.yMin = QDoubleSpinBox(); grl3.addWidget(self.yMin);
-        self.yMin.setRange(-50.0, 20.0); self.yMin.setValue(0.0); self.yMin.setSingleStep(0.05)
+        self.yMin.setRange(-50.0, 20.0); self.yMin.setSingleStep(0.05)
         self.yMin.valueChanged.connect(self.selectY)
 
         # Adding Ymax number range
         grl3.addWidget(QLabel('         Ymax: '))
         self.yMax = QDoubleSpinBox(); grl3.addWidget(self.yMax);
-        self.yMax.setRange(0.0, 50.0); self.yMax.setValue(15.0); self.yMax.setSingleStep(0.05)
+        self.yMax.setRange(0.0, 50.0); self.yMax.setSingleStep(0.05)
         self.yMax.valueChanged.connect(self.selectY)
 
         # Adding dY number range
         grl3.addWidget(QLabel('             dY: '))
         self.dy = QDoubleSpinBox(); grl3.addWidget(self.dy);
-        self.dy.setRange(0.0, 20.0); self.dy.setValue(0.25); self.dy.setSingleStep(0.05)
+        self.dy.setRange(0.0, 20.0); self.dy.setSingleStep(0.05)
         self.dy.valueChanged.connect(self.selectY)
 
     ############# grl4 - grid running layout 4 - Zmin, Zmax, dZ #########################
@@ -372,19 +348,19 @@ class Window(QMainWindow):
         # Adding Zmin number range
         grl4.addWidget(QLabel('         Zmin: '))
         self.zMin = QDoubleSpinBox(); grl4.addWidget(self.zMin);
-        self.zMin.setRange(-50.0, 20.0); self.zMin.setValue(10.0); self.zMin.setSingleStep(0.05)
+        self.zMin.setRange(-50.0, 20.0); self.zMin.setSingleStep(0.05)
         self.zMin.valueChanged.connect(self.selectZ)
 
         # Adding Zmax number range
         grl4.addWidget(QLabel('         Zmax: '))
         self.zMax = QDoubleSpinBox(); grl4.addWidget(self.zMax);
-        self.zMax.setRange(0.0, 50.0); self.zMax.setValue(12.0); self.zMax.setSingleStep(0.05)
+        self.zMax.setRange(0.0, 50.0); self.zMax.setSingleStep(0.05)
         self.zMax.valueChanged.connect(self.selectZ)
 
         # Adding dZ number range
         grl4.addWidget(QLabel('             dZ: '))
         self.dz = QDoubleSpinBox(); grl4.addWidget(self.dz);
-        self.dz.setRange(0.0, 20.0); self.dz.setValue(0.1); self.dz.setSingleStep(0.05)
+        self.dz.setRange(0.0, 20.0); self.dz.setSingleStep(0.05)
         self.dz.valueChanged.connect(self.selectZ)
 
     ############# grl5 - grid running layout 5  - Scan Type, Eta, WF_decay ##################
@@ -396,21 +372,20 @@ class Window(QMainWindow):
         # Creating scan type scroll bar
         self.scan = QComboBox(); grl5.addWidget(self.scan);
         self.scan.addItems(['dIdV', 'v-scan', 'states'])
-        self.scan.setCurrentIndex(1)
         self.scan.currentIndexChanged[str].connect(self.selectScanType)
         self.string_widgets['scan_type'] = self.scan
         
         # Adding Eta number range
         grl5.addWidget(QLabel('             Eta:            '))
         self.eta = QDoubleSpinBox(); grl5.addWidget(self.eta);
-        self.eta.setRange(0.0, 20.0); self.eta.setValue(0.1); self.eta.setSingleStep(0.05)
+        self.eta.setRange(0.0, 20.0); self.eta.setSingleStep(0.05)
         self.eta.valueChanged.connect(self.selectEta)
         self.num_widgets['etaValue'] = self.eta
 
         # Adding WF_decay number range (wfd)
         grl5.addWidget(QLabel('             WF_decay: '))
         self.wfd = QDoubleSpinBox(); grl5.addWidget(self.wfd);
-        self.wfd.setRange(0.0, 2.0); self.wfd.setValue(0.5); self.wfd.setSingleStep(0.05)
+        self.wfd.setRange(0.0, 2.0); self.wfd.setSingleStep(0.05)
         self.wfd.valueChanged.connect(self.selectWF_decay)
         self.num_widgets['wf_decay'] = self.wfd
 
@@ -421,21 +396,21 @@ class Window(QMainWindow):
         # Adding V(min) number range
         grl6.addWidget(QLabel('         V(min): '))
         self.vMin = QDoubleSpinBox(); grl6.addWidget(self.vMin);
-        self.vMin.setRange(-2.0, 2.0); self.vMin.setValue(-0.5); self.vMin.setSingleStep(0.05)
+        self.vMin.setRange(-2.0, 2.0); self.vMin.setSingleStep(0.05)
         self.vMin.valueChanged.connect(self.selectV)
         self.num_widgets['V'] = self.vMin
 
         # Adding Vmax number range
         grl6.addWidget(QLabel('         Vmax: '))
         self.vMax = QDoubleSpinBox(); grl6.addWidget(self.vMax);
-        self.vMax.setRange(0.0, 20.0); self.vMax.setValue(0.5); self.vMax.setSingleStep(0.05)
+        self.vMax.setRange(0.0, 20.0); self.vMax.setSingleStep(0.05)
         self.vMax.valueChanged.connect(self.selectV)
         self.num_widgets['Vmax'] = self.vMax
 
         # Adding dV number range
         grl6.addWidget(QLabel('             dV: '))
         self.dv = QDoubleSpinBox(); grl6.addWidget(self.dv);
-        self.dv.setRange(0.0, 20.0); self.dv.setValue(0.1); self.dv.setSingleStep(0.05)
+        self.dv.setRange(0.0, 20.0); self.dv.setSingleStep(0.05)
         self.dv.valueChanged.connect(self.selectV)
         self.num_widgets['dV'] = self.dv
 
@@ -446,21 +421,21 @@ class Window(QMainWindow):
         # Adding Tip orb s number range
         grl7.addWidget(QLabel('         Tip orb. s: '))
         self.orbS = QDoubleSpinBox(); grl7.addWidget(self.orbS);
-        self.orbS.setRange(-2.0, 2.0); self.orbS.setValue(1.0); self.orbS.setSingleStep(0.05)
+        self.orbS.setRange(-2.0, 2.0); self.orbS.setSingleStep(0.05)
         self.orbS.valueChanged.connect(self.selectTipOrbS)
         self.num_widgets['tipOrbS'] = self.orbS
 
         # Adding Vmax number range
         grl7.addWidget(QLabel('                 Tip orb. pxy:   '))
         self.orbPxy = QDoubleSpinBox(); grl7.addWidget(self.orbPxy);
-        self.orbPxy.setRange(0.0, 20.0); self.orbPxy.setValue(0.0); self.orbPxy.setSingleStep(0.05)
+        self.orbPxy.setRange(0.0, 20.0); self.orbPxy.setSingleStep(0.05)
         self.orbPxy.valueChanged.connect(self.selectTipOrbPxy)
         self.num_widgets['tipOrbPxy'] = self.orbPxy
 
         # Adding dV number range
         grl7.addWidget(QLabel('             OMP_NUM_THREADS: '))
         self.ont = QSpinBox(); grl7.addWidget(self.ont);
-        self.ont.setRange(0, 20); self.ont.setValue(1); self.ont.setSingleStep(1)
+        self.ont.setRange(0, 20); self.ont.setSingleStep(1)
         self.ont.valueChanged.connect(self.selectONT)
         self.num_widgets['OMP_NUM_THREADS'] = self.ont
 
@@ -473,7 +448,6 @@ class Window(QMainWindow):
 
         self.tipOrb = QComboBox(); l1.addWidget(self.tipOrb)
         self.tipOrb.addItems(['s', 'pxy', 'spxy', '5spxy', '10spxy', 'CO', 'pz', 'dz2', 'dxzyz'])
-        self.tipOrb.setCurrentIndex(1)
         self.tipOrb.currentIndexChanged[str].connect(self.selectTipOrb)
         self.string_widgets['tip_orb'] = self.tipOrb
 
@@ -485,7 +459,6 @@ class Window(QMainWindow):
         # Creating tip type scroll bar
         self.tip_type = QComboBox();  l1.addWidget(self.tip_type);
         self.tip_type.addItems(['fixed', 'relaxed'])
-        self.tip_type.setCurrentIndex(0)
         self.tip_type.currentIndexChanged[str].connect(self.selectTipType)
         l1.setAlignment(Qt.AlignLeft)
         self.string_widgets['tip_type'] = self.tip_type
@@ -514,13 +487,13 @@ class Window(QMainWindow):
         # Adding Voltage Index number range
         vo1.addWidget(QLabel('             Voltage Index: '))
         self.vIndx = QSpinBox(); vo1.addWidget(self.vIndx);
-        self.vIndx.setRange(0, 10000); self.vIndx.setValue(0); self.vIndx.setSingleStep(1)
+        self.vIndx.setRange(0, 10000); self.vIndx.setSingleStep(1)
         self.vIndx.valueChanged.connect(self.selectVindx)
 
         # Adding Height Index number range
         vo1.addWidget(QLabel('             Height Index: '))
         self.hIndx = QSpinBox(); vo1.addWidget(self.hIndx);
-        self.hIndx.setRange(0, 10000); self.hIndx.setValue(0); self.hIndx.setSingleStep(1)
+        self.hIndx.setRange(0, 10000); self.hIndx.setSingleStep(1)
         self.hIndx.valueChanged.connect(self.selectHindx)
         
 

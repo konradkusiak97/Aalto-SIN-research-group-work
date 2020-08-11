@@ -197,7 +197,7 @@ def newPPSTM_simple(myDict, paths, importData):
         os.environ['OMP_NUM_THREADS'] = str(ncpu)
         print('OMP_NUM_THREADS:', os.environ['OMP_NUM_THREADS'])
 
-    if (XSF or NPY or (tip_type == 'relaxed') or (tip_type == 'r')):
+    if (tip_type == 'relaxed') or (tip_type == 'r'):
         print("For XSF or NPY outputs or tip_type = relaxed you have to have installed PPAFM in your PPSTM directory ")
         import pyProbeParticle.GridUtils as GU
 

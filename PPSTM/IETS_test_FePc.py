@@ -157,138 +157,138 @@ for WorkFunction in [WorkFunction]:
             print("saving, V:",V)
             j=0;
             for eta in [1.0]:
-            GU.save_scal_field( path_pos+'curs'+namez[i], curs[:,:,:,j], lvec1, data_format=data_format )
-            GU.save_scal_field( path_pos+'curp'+namez[i], curp[:,:,:,j], lvec1, data_format=data_format )
-            GU.save_scal_field( path_pos+'ietss'+namez[i], ietss[:,:,:,j], lvec1, data_format=data_format )
-            GU.save_scal_field( path_pos+'ietsp'+namez[i], ietsp[:,:,:,j], lvec1, data_format=data_format )
-            GU.save_scal_field( path_pos+'IETSs'+namez[i], IETSs[:,:,:,j], lvec1, data_format=data_format )
-            GU.save_scal_field( path_pos+'IETSp'+namez[i], IETSp[:,:,:,j], lvec1, data_format=data_format )
-            j+=1
+                GU.save_scal_field( path_pos+'curs'+namez[i], curs[:,:,:,j], lvec1, data_format=data_format )
+                GU.save_scal_field( path_pos+'curp'+namez[i], curp[:,:,:,j], lvec1, data_format=data_format )
+                GU.save_scal_field( path_pos+'ietss'+namez[i], ietss[:,:,:,j], lvec1, data_format=data_format )
+                GU.save_scal_field( path_pos+'ietsp'+namez[i], ietsp[:,:,:,j], lvec1, data_format=data_format )
+                GU.save_scal_field( path_pos+'IETSs'+namez[i], IETSs[:,:,:,j], lvec1, data_format=data_format )
+                GU.save_scal_field( path_pos+'IETSp'+namez[i], IETSp[:,:,:,j], lvec1, data_format=data_format )
+                j+=1
 
         # --- plotting part here, plots all calculated signals:
         if wsxm:
             print(" plotting wsxm")
             for eta in [1.0]:
             #import pyProbeParticle.GridUtils as GU
-            print(" printing current into WSxM files :")
-            GU.saveWSxM_3D(path_pos+"current_eta_"+str(eta)+"_"+str(ki)+"+" , 0.15*curs[:,:,:,0]+curp[:,:,:,0] , extent , slices=None)
+                print(" printing current into WSxM files :")
+                GU.saveWSxM_3D(path_pos+"current_eta_"+str(eta)+"_"+str(ki)+"+" , 0.15*curs[:,:,:,0]+curp[:,:,:,0] , extent , slices=None)
 
-            print(" printing IETS-stm into WSxM files :")
-            GU.saveWSxM_3D(path_pos+"IETS-stm_part_eta_"+str(eta)+"_"+str(ki)+"+" , 0.15*ietss[:,:,:,0]+ietsp[:,:,:,0] , extent , slices=None)
+                print(" printing IETS-stm into WSxM files :")
+                GU.saveWSxM_3D(path_pos+"IETS-stm_part_eta_"+str(eta)+"_"+str(ki)+"+" , 0.15*ietss[:,:,:,0]+ietsp[:,:,:,0] , extent , slices=None)
 
-            print(" printing IETS_amplitude into WSxM files :")
-            GU.saveWSxM_3D(path_pos+"IETS_amplitude_eta_"+str(eta)+"_"+str(ki)+"+" , 0.15*IETSs[:,:,:,0]+IETSp[:,:,:,0] , extent , slices=None)
+                print(" printing IETS_amplitude into WSxM files :")
+                GU.saveWSxM_3D(path_pos+"IETS_amplitude_eta_"+str(eta)+"_"+str(ki)+"+" , 0.15*IETSs[:,:,:,0]+IETSp[:,:,:,0] , extent , slices=None)
 
             
         if Plot_iets:
             print(" plotting IETS images")
             for k in range(len(current0)):
-            name_plot0 =namez[i]+';height:%03d$\AA$; dIdV [G0] s-tip'              %(k+ki)
-            name_plot1 =namez[i]+';height:%03d$\AA$; dIdV [G0] pxy-tip'            %(k+ki)
-            name_plot2 =namez[i]+';height:%03d$\AA$; dIdV [G0] s-pxy-tip'          %(k+ki)
+                name_plot0 =namez[i]+';height:%03d$\AA$; dIdV [G0] s-tip'              %(k+ki)
+                name_plot1 =namez[i]+';height:%03d$\AA$; dIdV [G0] pxy-tip'            %(k+ki)
+                name_plot2 =namez[i]+';height:%03d$\AA$; dIdV [G0] s-pxy-tip'          %(k+ki)
 
-            name_plot3 =namez[i]+';height:%03d$\AA$; iets(stm) [G0/$\AA$^2] s-tip'              %(k+ki)
-            name_plot4 =namez[i]+';height:%03d$\AA$; iets(stm) [G0/$\AA$^2] pxy-tip'            %(k+ki)
-            name_plot5 =namez[i]+';height:%03d$\AA$; iets(stm) [G0/$\AA$^2] s-pxy-tip'          %(k+ki)
+                name_plot3 =namez[i]+';height:%03d$\AA$; iets(stm) [G0/$\AA$^2] s-tip'              %(k+ki)
+                name_plot4 =namez[i]+';height:%03d$\AA$; iets(stm) [G0/$\AA$^2] pxy-tip'            %(k+ki)
+                name_plot5 =namez[i]+';height:%03d$\AA$; iets(stm) [G0/$\AA$^2] s-pxy-tip'          %(k+ki)
 
-            name_plot6 =namez[i]+';height:%03d$\AA$; IETS [?] s-tip'              %(k+ki)
-            name_plot7 =namez[i]+';height:%03d$\AA$; IETS [?] pxy-tip'            %(k+ki)
-            name_plot8 =namez[i]+';height:%03d$\AA$; IETS [?] s-pxy-tip'          %(k+ki)
+                name_plot6 =namez[i]+';height:%03d$\AA$; IETS [?] s-tip'              %(k+ki)
+                name_plot7 =namez[i]+';height:%03d$\AA$; IETS [?] pxy-tip'            %(k+ki)
+                name_plot8 =namez[i]+';height:%03d$\AA$; IETS [?] s-pxy-tip'          %(k+ki)
 
-            name_plot9 =namez[i]+';height:%03d$\AA$; df [hz]'                     %(k+ki)
-            name_plot10=namez[i]+';height:%03d$\AA$; iets(AFM only) [?]'          %(k+ki)
-            name_plot11=namez[i]+';height:%03d$\AA$; denominators   [s]'          %(k+ki)
+                name_plot9 =namez[i]+';height:%03d$\AA$; df [hz]'                     %(k+ki)
+                name_plot10=namez[i]+';height:%03d$\AA$; iets(AFM only) [?]'          %(k+ki)
+                name_plot11=namez[i]+';height:%03d$\AA$; denominators   [s]'          %(k+ki)
 
-            # ploting part here:
-            plt.figure( figsize=(3./3* xl , 3./3*yl ) )
+                # ploting part here:
+                plt.figure( figsize=(3./3* xl , 3./3*yl ) )
 
-            plt.subplot(4,3,1)
-            plt.imshow(  curs[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.ylabel(r' Tip_y $\AA$; eta =1.00 eV')
-            plt.title(name_plot0)
+                plt.subplot(4,3,1)
+                plt.imshow(  curs[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.ylabel(r' Tip_y $\AA$; eta =1.00 eV')
+                plt.title(name_plot0)
 
-            plt.subplot(4,3,2)
-            plt.imshow(  curp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot1)
+                plt.subplot(4,3,2)
+                plt.imshow(  curp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot1)
 
-            plt.subplot(4,3,3)
-            plt.imshow(  0.15*curs[k,:,:,0]+curp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot2)
+                plt.subplot(4,3,3)
+                plt.imshow(  0.15*curs[k,:,:,0]+curp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot2)
 
-            plt.subplot(4,3,4)
-            plt.imshow(  ietss[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.ylabel(r' Tip_y $\AA$; eta =1.00 eV')
-            plt.title(name_plot3)
+                plt.subplot(4,3,4)
+                plt.imshow(  ietss[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.ylabel(r' Tip_y $\AA$; eta =1.00 eV')
+                plt.title(name_plot3)
 
-            plt.subplot(4,3,5)
-            plt.imshow(  ietsp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot4)
+                plt.subplot(4,3,5)
+                plt.imshow(  ietsp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot4)
 
-            plt.subplot(4,3,6)
-            plt.imshow(  0.15*ietss[k,:,:,0]+ietsp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot5)
+                plt.subplot(4,3,6)
+                plt.imshow(  0.15*ietss[k,:,:,0]+ietsp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot5)
 
-            plt.subplot(4,3,7)
-            plt.imshow(  IETSs[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.ylabel(r' Tip_y $\AA$; eta =1.00 eV')
-            plt.title(name_plot6)
+                plt.subplot(4,3,7)
+                plt.imshow(  IETSs[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.ylabel(r' Tip_y $\AA$; eta =1.00 eV')
+                plt.title(name_plot6)
 
-            plt.subplot(4,3,8)
-            plt.imshow(  IETSp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot7)
+                plt.subplot(4,3,8)
+                plt.imshow(  IETSp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot7)
 
-            plt.subplot(4,3,9)
-            plt.imshow(  0.15*IETSs[k,:,:,0]+IETSp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot8)
+                plt.subplot(4,3,9)
+                plt.imshow(  0.15*IETSs[k,:,:,0]+IETSp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot8)
 
-            plt.subplot(4,3,10)
-            plt.imshow(  df[k,:,:], origin='image', extent=extent, cmap='gray' )
-            plt.ylabel(r' Tip_y $\AA$;PP-AFM code')
-            plt.title(name_plot9)
-            plt.xlabel(r' Tip_x $\AA$')
+                plt.subplot(4,3,10)
+                plt.imshow(  df[k,:,:], origin='image', extent=extent, cmap='gray' )
+                plt.ylabel(r' Tip_y $\AA$;PP-AFM code')
+                plt.title(name_plot9)
+                plt.xlabel(r' Tip_x $\AA$')
 
-            plt.subplot(4,3,11)
-            plt.imshow(  iets_afm[k,:,:,2], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot10)
-            plt.xlabel(r' Tip_x $\AA$')
+                plt.subplot(4,3,11)
+                plt.imshow(  iets_afm[k,:,:,2], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot10)
+                plt.xlabel(r' Tip_x $\AA$')
 
-            plt.subplot(4,3,12)
-            plt.imshow(  denomin1[k,:,:], origin='image', extent=extent, cmap='gray' )
-            plt.title(name_plot11)
-            plt.xlabel(r' Tip_x $\AA$')
+                plt.subplot(4,3,12)
+                plt.imshow(  denomin1[k,:,:], origin='image', extent=extent, cmap='gray' )
+                plt.title(name_plot11)
+                plt.xlabel(r' Tip_x $\AA$')
 
 
 
-            plt.savefig('All_'+namez[i]+"_fermi_"+str(fermi)+'_%03d.png' %(k+ki) , bbox_inches='tight' )
-            plt.close()
+                plt.savefig('All_'+namez[i]+"_fermi_"+str(fermi)+'_%03d.png' %(k+ki) , bbox_inches='tight' )
+                plt.close()
             
         if ((i>0)and Plot_dI2):
             print(" plotting d^2I/dV^2 ")
             for k in range(current6.shape[0]):
 
-            name_plot0 =namez[i]+';height:%03d$\AA$; d^2I/dV^2 [G0] s-tip'              %(k+ki)
-            name_plot1 =namez[i]+';height:%03d$\AA$; d^2I/dV^2 [G0] pxy-tip'            %(k+ki)
-            name_plot2 =namez[i]+';height:%03d$\AA$; d^2I/dV^2 [G0] s-pxy-tip'          %(k+ki)
+                name_plot0 =namez[i]+';height:%03d$\AA$; d^2I/dV^2 [G0] s-tip'              %(k+ki)
+                name_plot1 =namez[i]+';height:%03d$\AA$; d^2I/dV^2 [G0] pxy-tip'            %(k+ki)
+                name_plot2 =namez[i]+';height:%03d$\AA$; d^2I/dV^2 [G0] s-pxy-tip'          %(k+ki)
 
-            # ploting part here:
-            plt.figure( figsize=(xl , 4./3*yl ) )
-        
+                # ploting part here:
+                plt.figure( figsize=(xl , 4./3*yl ) )
+            
 
-            plt.subplot(1,3,1)
-            plt.imshow(  curs[k,:,:,0] - o_curs[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.ylabel(r' Tip_y $\AA$; eta =1.0 eV')
-            plt.xlabel(r' Tip_x $\AA$')
+                plt.subplot(1,3,1)
+                plt.imshow(  curs[k,:,:,0] - o_curs[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.ylabel(r' Tip_y $\AA$; eta =1.0 eV')
+                plt.xlabel(r' Tip_x $\AA$')
 
-            plt.subplot(1,3,2)
-            plt.imshow(  curp[k,:,:,0] - o_curp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
-            plt.xlabel(r' Tip_x $\AA$')
+                plt.subplot(1,3,2)
+                plt.imshow(  curp[k,:,:,0] - o_curp[k,:,:,0], origin='image', extent=extent, cmap='gray' )
+                plt.xlabel(r' Tip_x $\AA$')
 
-            plt.subplot(1,3,3)
-            plt.imshow(  0.15*curs[k,:,:,0]+curp[k,:,:,0] - (0.15*o_curs[k,:,:,0]+o_curp[k,:,:,0]), origin='image', extent=extent, cmap='gray' )
-            plt.xlabel(r' Tip_x $\AA$')
+                plt.subplot(1,3,3)
+                plt.imshow(  0.15*curs[k,:,:,0]+curp[k,:,:,0] - (0.15*o_curs[k,:,:,0]+o_curp[k,:,:,0]), origin='image', extent=extent, cmap='gray' )
+                plt.xlabel(r' Tip_x $\AA$')
 
-            plt.savefig( 'd2IdV2_'+namez_der[i]+"_fermi_"+str(fermi)+'_%03d.png' %(k+ki) , bbox_inches='tight' )
-            plt.close()
+                plt.savefig( 'd2IdV2_'+namez_der[i]+"_fermi_"+str(fermi)+'_%03d.png' %(k+ki) , bbox_inches='tight' )
+                plt.close()
         
         o_curs = curs.copy();
         o_curp = curp.copy();

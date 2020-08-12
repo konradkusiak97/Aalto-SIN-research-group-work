@@ -10,7 +10,7 @@
 def importData(myDict, paths):
 
     # None ; [[ax,ay,0],[bx,by,0]],[0,0,cz]] or [[ax,ay],[bx,by]] ; 'input.lvs' -- files with specified cell ; in FHI-AIMS & GPAW allready specified with geometry #
-    lvs = [[22,0],[0,22]]
+    lvs = None
 
     # E.G. 'input.xyz' , 'input.bas' , 'geometry.in'; None for GPAW #
     geometry_file = paths['geometry_file']
@@ -21,7 +21,7 @@ def importData(myDict, paths):
     pbc = (int(myDict['pbc'][0]), int(myDict['pbc'][1]))        # (0,0) = None = False -- only original geometry ; (0.5,0.5) -- 2x2 cell ; (1,1) -- 3x3 cell (around original) ; (2,2) -- 5x5 cell (around original) ... #
     cp2k_name = paths['cp2kName']  # Name used in CP2K calculations or GPAW calc #
 
-    cut_atoms = None         # None = -1 -- All atoms of the sample contributes to tunelling ; 1 -- only 1st atom of the sample contributes to the tunelling ; 57 -- first 57 atoms of the sample contributes to the tunelling ; ... #
+    cut_atoms = 57         # None = -1 -- All atoms of the sample contributes to tunelling ; 1 -- only 1st atom of the sample contributes to the tunelling ; 57 -- first 57 atoms of the sample contributes to the tunelling ; ... #
     lower_atoms = []             # [] = None -- No atoms has lowered hopping ; be aware python numbering occurs here: [0] - means lowering of the 1st atom; [0,1,2,3] -- lowering of 1st 4 atoms ... #
     lower_coefs = []             # [] = None -- No lowering of the hoppings  ; [0.5] -- lowering of the 1st atom hopping to 0.5                           ; [0.5,0.5,0.5,0.5] -- lowering of 1st 4 atoms to 0.5 ... #
     
@@ -31,7 +31,7 @@ def importData(myDict, paths):
     cut_min = -2.5
     # cut out all orbitals higher than -2.5 eV above  Fermi (should be: cut_max >= Vmax+2*eta) . taken to the Fermi Level #
     cut_max = +2.5
-    files_path = paths['geometry_path']            # where are files fron DFT code ; rather do not use this #
+    files_path = paths['inputPath']            # where are files fron DFT code ; rather do not use this #
     sample_orbs = myDict['sample_orbs']
     spin = myDict['spin']
     if spin == 'None': spin = None
@@ -118,9 +118,6 @@ def newPPSTM_simple(myDict, paths, importData):
     Ratin = importData['Ratin']
 
     tip_type = myDict['tip_type']
-
-    # path (absolute or relative) to your PPSTM code #
-    ppstm_path = paths['inputPath']
     #
     ncpu = myDict['OMP_NUM_THREADS']               # number of cpu cores for OMP paralelization: ncpu = 1 -- serial compilation & calculations; iff ncpu > 1, then OMP paralel recompilation is used and C++ calculations are running on more cores #
     #

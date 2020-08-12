@@ -20,4 +20,4 @@ tipOrbPxy: 0.0
 OMP_NUM_THREADS: 1.0
 tip_type: fixed
 tip_orb: pxy
-paths: {'inputPath': './PPSTM/', 'geometry_path': './PPSTM/tests/4N-coronene/', 'geometry_file': 'crazy_mol.xyz', 'cp2kName': 'crazy_mol'}
+paths: {'inputPath': './tests/4N-coronene/', 'geometry_file': 'crazy_mol.xyz', 'cp2kName': 'crazy_mol'}

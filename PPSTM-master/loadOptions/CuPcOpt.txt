@@ -17,7 +17,7 @@ Vmax: 0.5
 dV: 0.1
 tipOrbS: 1.0
 tipOrbPxy: 0.0
-OMP_NUM_THREADS: 4
+OMP_NUM_THREADS: 4.0
 tip_type: fixed
 tip_orb: s
-paths: {'inputPath': './PPSTM/', 'geometry_path': '../CuPc/', 'geometry_file': 'CuPc.xyz', 'cp2kName': 'CuPc'}
+paths: {'inputPath': './tests/CuPc/', 'geometry_file': 'CuPc.xyz', 'cp2kName': 'CuPc'}

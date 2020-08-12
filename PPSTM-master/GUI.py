@@ -269,12 +269,11 @@ class Window(QMainWindow):
         # In this case self is needed in order to reference later to the written text inside.
         self.path_inputFiles = QLineEdit(); pathBox.addWidget(self.path_inputFiles)
         
-        # Adding geometry_path text box to the layout
+        # Adding geometry_file text box to the layout
         geometryBox = QVBoxLayout(); inputLayout2.addLayout(geometryBox)
-        geometryBox.addWidget(QLabel("Geometry file path & name"))
+        geometryBox.addWidget(QLabel("Geometry name"))
         # Creating geometry file path text box
-        self.geometryPath = QLineEdit(); geometryBox.addWidget(self.geometryPath)
-        self.geometryPath.setText('_ &')
+        self.geometryFile = QLineEdit(); geometryBox.addWidget(self.geometryFile)
 
         # Adding CP2K/GPAW name text box to the layout
         nameBox = QVBoxLayout(); inputLayout2.addLayout(nameBox)
@@ -567,8 +566,6 @@ class Window(QMainWindow):
                 f.write(str(data[d]))
                 f.write('\n')
             if paths:
-                if paths['geometry_path'] == '':
-                    paths['geometry_path'] = '_'
                 f.write('paths: ')
                 f.write(str(paths))
             f.close()
@@ -654,23 +651,15 @@ class Window(QMainWindow):
     def imported(self):
         # check if path to input files is given, if not give error and do not let to run
         inputPath = self.path_inputFiles.text()
-        geometry_path = self.geometryPath.text() 
+        geometry_file = self.geometryFile.text() 
         cp2kName = self.name.text()
-        geometry_path = re.sub('\,|\&', '', geometry_path)
-        geometry_path = geometry_path.split()
 
-        if len(inputPath) == 0 or len(cp2kName) == 0 or len(geometry_path) != 2:
-            print ('Input path not given')
+        if len(inputPath) == 0 or len(cp2kName) == 0 or len(geometry_file) == 0:
+            print ('Path/name/file not given')
             return 
 
-        geometry_file = geometry_path[1]
-        geometry_path = geometry_path[0]
-
-        if geometry_path == '_':
-            geometry_path = ''
 
         self.paths = {'inputPath': inputPath, 
-                      'geometry_path': geometry_path,
                       'geometry_file': geometry_file,
                       'cp2kName': cp2kName,}
         
@@ -701,21 +690,13 @@ class Window(QMainWindow):
                     self.paths[words[1]] = words[2]
                     self.path_inputFiles.setText(words[2])
                     
-                    # geometry_path
-                    if words[4] == '_':
-                        self.paths[words[3]] = ''
-                    else:
-                        self.paths[words[3]] = words[4]
-
-                    # geometry_file (name)
-                    self.paths[words[5]] = words[6]
-
-                    # concatenate geometry_file and name and put into widget
-                    self.geometryPath.setText(words[4]+ ' & ' + words[6])
+                    # geometry_file
+                    self.paths[words[3]] = words[4]
+                    self.geometryFile.setText(words[4])
 
                     # cp2kName
-                    self.paths[words[7]] = words[8]
-                    self.name.setText(words[8])
+                    self.paths[words[5]] = words[6]
+                    self.name.setText(words[6])
 
                     self.paramList.remove('paths')
                     continue
@@ -790,7 +771,7 @@ class Window(QMainWindow):
             print('Error. Run first.')
     
     def plotGeom(self, atomSize=0.1, edge=True, ec='k'):
-        atoms, tmp1, tmp2 = Bu.loadAtoms(os.path.join(self.paths['geometry_path'], 'input_plot.xyz')); del tmp1, tmp2;
+        atoms, tmp1, tmp2 = Bu.loadAtoms(os.path.join(self.paths['inputPath'], 'input_plot.xyz')); del tmp1, tmp2;
         self.plotData['geom_plot'] = atoms
         plt.fig = plt.gcf()
         es = atoms[0]; xs = atoms[1]; ys = atoms[2]

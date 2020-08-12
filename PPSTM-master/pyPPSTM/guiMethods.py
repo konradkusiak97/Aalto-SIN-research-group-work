@@ -21,7 +21,7 @@ def importData(myDict, paths):
     pbc = (int(myDict['pbc'][0]), int(myDict['pbc'][1]))        # (0,0) = None = False -- only original geometry ; (0.5,0.5) -- 2x2 cell ; (1,1) -- 3x3 cell (around original) ; (2,2) -- 5x5 cell (around original) ... #
     cp2k_name = paths['cp2kName']  # Name used in CP2K calculations or GPAW calc #
 
-    cut_atoms = 57         # None = -1 -- All atoms of the sample contributes to tunelling ; 1 -- only 1st atom of the sample contributes to the tunelling ; 57 -- first 57 atoms of the sample contributes to the tunelling ; ... #
+    cut_atoms = -1         # None = -1 -- All atoms of the sample contributes to tunelling ; 1 -- only 1st atom of the sample contributes to the tunelling ; 57 -- first 57 atoms of the sample contributes to the tunelling ; ... #
     lower_atoms = []             # [] = None -- No atoms has lowered hopping ; be aware python numbering occurs here: [0] - means lowering of the 1st atom; [0,1,2,3] -- lowering of 1st 4 atoms ... #
     lower_coefs = []             # [] = None -- No lowering of the hoppings  ; [0.5] -- lowering of the 1st atom hopping to 0.5                           ; [0.5,0.5,0.5,0.5] -- lowering of 1st 4 atoms to 0.5 ... #
     
@@ -204,28 +204,29 @@ def newPPSTM_simple(myDict, paths, importData):
     # 's' ; 'pxy' -- px & py ; 'spxy' -- 50% s & 50% pxy ; '5spxy' -- 5% s & 95% pxy ; '10spxy' -- 10% s & 90% pxy ; 'CO' -- 13% s & 87% pxy (PRL 119, 166001 (2017)) ; 'pz' ; For sample_orbs = 'sp' , possible 'dz2' and 'dxzyz' -- dxz & dyz #
     s = myDict['tipOrbS']
     px = py = 0.5 * myDict['tipOrbPxy']
+    tc = [s, px, py, 0., 0., 0., 0.]
 
-    if (tip_orb == 's'):
-        tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == 'pxy'):
-        tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == 'spxy'):
-        tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == '5spxy'):
+    # if (tip_orb == 's'):
+      #  tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == 'pxy'):
+      #  tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == 'spxy'):
+      #  tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == '5spxy'):
         # [s, px, py, pz, dz2, dxz, dyz ]
-        tc = [s, px, py, 0., 0., 0., 0.]
-    elif (tip_orb == '10spxy'):
-        tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == 'CO'):
-        tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == 'pz'):
-        tc = [s, px, py, 1., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == 'dz2'):
-        tc = [s, px, py, 0., 1., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
-    elif (tip_orb == 'dxzyz'):
-        tc = [s, px, py, 0., 0., 0.5, 0.5]  # [s, px, py, pz, dz2, dxz, dyz ]
-    else:
-        print("Don't know what kind of tip you mean. I rather going to exit."); return None
+      #  tc = [s, px, py, 0., 0., 0., 0.]
+    # elif (tip_orb == '10spxy'):
+      #  tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == 'CO'):
+      #  tc = [s, px, py, 0., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == 'pz'):
+      #  tc = [s, px, py, 1., 0., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == 'dz2'):
+      #  tc = [s, px, py, 0., 1., 0., 0.]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # elif (tip_orb == 'dxzyz'):
+      #  tc = [s, px, py, 0., 0., 0.5, 0.5]  # [s, px, py, pz, dz2, dxz, dyz ]
+    # else:
+      #  print("Don't know what kind of tip you mean. I rather going to exit."); return None
 
     # print "DEBUG: tc ", tc , " [s, px, py, pz, dz2, dxz, dyz ] "
 
@@ -236,7 +237,7 @@ def newPPSTM_simple(myDict, paths, importData):
         path_pos = "Q%1.2fK%1.2f/" % (Q, K)
         print(path_pos)
         tip_r, lvec, nDim = GU.load_vec_field(
-            path_pos+'PPpos', data_format=data_format)
+            os.path.join(paths['inputPath'], path_pos+'PPpos'), data_format=data_format)
         extent = (lvec[0, 0], lvec[0, 0]+lvec[1, 0],
                 lvec[0, 1], lvec[0, 1]+lvec[2, 1])
         # print "DEBUG: extent", extent

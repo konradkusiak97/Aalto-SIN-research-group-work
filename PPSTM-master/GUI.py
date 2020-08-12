@@ -177,15 +177,14 @@ class Window(QMainWindow):
                        'tipOrbS': 0.0,
                        'tipOrbPxy': 0.0,
                        'OMP_NUM_THREADS': 0,
-                       'tip_type': 'fixed',
-                       'tip_orb': 's'}
+                       'tip_type': 'fixed',}
             
         self.importData = None
         self.plotData = None
 
         self.string_widgets = {}
         self.num_widgets = {}
-        self.paramList = ['dft_code', 'sample_orbs', 'spin', 'pbc', 'data_format', 'kValue', 'qValue', 'x', 'y', 'z', 'scan_type', 'etaValue', 'wf_decay', 'V', 'Vmax', 'dV', 'tipOrbS', 'tipOrbPxy', 'OMP_NUM_THREADS', 'tip_type', 'tip_orb', 'paths']
+        self.paramList = ['dft_code', 'sample_orbs', 'spin', 'pbc', 'data_format', 'kValue', 'qValue', 'x', 'y', 'z', 'scan_type', 'etaValue', 'wf_decay', 'V', 'Vmax', 'dV', 'tipOrbS', 'tipOrbPxy', 'OMP_NUM_THREADS', 'tip_type', 'paths']
         self.runClicked = False
         self.paths = None
         self.map = 'dIdV'
@@ -438,7 +437,7 @@ class Window(QMainWindow):
         grl7 = QHBoxLayout(); controlLayout.addLayout(grl7);
 
         # Adding Tip orb s number range
-        grl7.addWidget(QLabel('         Tip orb. s: '))
+        grl7.addWidget(QLabel('         Tip orb. s:  '))
         self.orbS = QDoubleSpinBox(); grl7.addWidget(self.orbS);
         self.orbS.setRange(-2.0, 2.0); self.orbS.setSingleStep(0.05)
         self.orbS.valueChanged.connect(self.selectTipOrbS)
@@ -463,12 +462,6 @@ class Window(QMainWindow):
         grl8 = QHBoxLayout(); controlLayout.addLayout(grl8)
 
         l1 = QHBoxLayout(); grl8.addLayout(l1)
-        label1 = QLabel("           Tip Orb:"); l1.addWidget(label1)
-
-        self.tipOrb = QComboBox(); l1.addWidget(self.tipOrb)
-        self.tipOrb.addItems(['s', 'pxy', 'spxy', '5spxy', '10spxy', 'CO', 'pz', 'dz2', 'dxzyz'])
-        self.tipOrb.currentIndexChanged[str].connect(self.selectTipOrb)
-        self.string_widgets['tip_orb'] = self.tipOrb
 
         # Tip type
         label2 = QLabel("               Tip type:")

@@ -271,7 +271,7 @@ class Window(QMainWindow):
         
         # Adding geometry_file text box to the layout
         geometryBox = QVBoxLayout(); inputLayout2.addLayout(geometryBox)
-        geometryBox.addWidget(QLabel("Geometry name"))
+        geometryBox.addWidget(QLabel("Geometry file name"))
         # Creating geometry file path text box
         self.geometryFile = QLineEdit(); geometryBox.addWidget(self.geometryFile)
 

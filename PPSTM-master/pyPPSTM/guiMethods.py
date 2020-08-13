@@ -135,8 +135,6 @@ def newPPSTM_simple(myDict, paths, importData):
     eta = myDict['etaValue']
     # 0.0 <= WF_decay <= 1.0 ; How fast WorkFunction tunnelling barrier is changing with Voltage : (WF = WF_0 + V*WF_decay) -- 0.0 no change ; 1.0 - the same change as voltage #
     WF_decay = myDict['wf_decay']
-    # 's' ; 'pxy' -- px & py ; 'spxy' -- 50% s & 50% pxy ; '5spxy' -- 5% s & 95% pxy ; '10spxy' -- 10% s & 90% pxy ; 'CO' -- 13% s & 87% pxy (PRL 119, 166001 (2017)) ; 'pz' ; For sample_orbs = 'sp' , possible 'dz2' and 'dxzyz' -- dxz & dyz #
-    tip_orb = myDict['tip_orb']
     # orbitals of the sample 'sp' (light atoms only, faster) or 'spd' (all atoms) #
     sample_orbs = myDict['sample_orbs']
 
@@ -308,33 +306,40 @@ def newPPSTM_simple(myDict, paths, importData):
     namez = []
     for V in Voltages:
         namez.append(str(round(V,round_index)))
-    
-    NoV_didv = len(didv)
-    NoH_didv = len(didv[0]) 
-    NoV_STM = len(current)
-    NoH_STM = len(current[0])
+    plotData = {}
+    plotData['NoV_didv'] = 0
+    plotData['NoH_didv'] = 0
+    plotData['NoV_STM'] = 0
+    plotData['NoH_STM'] = 0
+
+    if scan_type == 'dIdV' or scan_type == 'v-scan':
+        NoV_didv = len(didv) 
+        NoH_didv = len(didv[0]) 
+        plotData['didv'] = didv
+        plotData['NoV_didv'] = NoV_didv
+        plotData['NoH_didv'] = NoH_didv
+
+    if scan_type == 'states' or scan_type == 'v-scan':
+        NoV_STM = len(current) 
+        NoH_STM = len(current[0]) 
+        plotData['current'] = current
+        plotData['NoV_STM'] = NoV_STM
+        plotData['NoH_STM'] = NoH_STM
 
     print() 
     print()
     print("Done")
     print()
 
-    plotData = {'namez': namez,
+    plotData.update({'namez': namez,
                 'tip_type': tip_type,
-                'tip_orb': tip_orb,
-                'didv': didv,
-                'current': current,
                 'lvec': lvec,
                 'extent': extent,
                 'WorkFunction': WorkFunction,
                 'Voltages': Voltages,
                 'WF_decay': WF_decay,
                 'tip_r0': tip_r0,
-                'tip_r': tip_r,
-                'NoV_didv': NoV_didv,
-                'NoH_didv': NoH_didv,
-                'NoV_STM': NoV_STM,
-                'NoH_STM': NoH_STM }
+                'tip_r': tip_r})
 
     return plotData
     # print "DEBUG: Voltages", Voltages

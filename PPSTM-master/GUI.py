@@ -53,15 +53,14 @@ class MplCanvas(FigureCanvasQTAgg):
         k = self.parent.Hindx
         namez = self.parent.plotData['namez']
         tip_type = self.parent.plotData['tip_type']
-        tip_orb = self.parent.plotData['tip_orb']
         WorkFunction = self.parent.plotData['WorkFunction']
         Voltages = self.parent.plotData['Voltages']
         WF_decay = self.parent.plotData['WF_decay']
         eta = self.parent.myDict['etaValue']
         if mapType == 'dIdV':
-            fileName, fext = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'didv_'+namez[vv]+"_tip_"+tip_type+"-"+tip_orb+"_WF_"+str(WorkFunction-Voltages[vv]*WF_decay)+"_eta_"+str(eta)+'_%03d' %k, "WSxM Files (*.xyz);;XSF Files (*.xsf);;NPY Files (*.npy)")
+            fileName, fext = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'didv_'+namez[vv]+"_tip_"+tip_type+"-"+"_WF_"+str(WorkFunction-Voltages[vv]*WF_decay)+"_eta_"+str(eta)+'_%03d' %k, "WSxM Files (*.xyz);;XSF Files (*.xsf);;NPY Files (*.npy)")
         else:
-            fileName, fext = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'STM_'+namez[vv]+"_tip_"+tip_type+"-"+tip_orb+"_WF_"+str(WorkFunction)+"_WF_decay_"+str(round(WF_decay,1))+"_eta_"+str(eta)+'_%03d' %k, "WSxM Files (*.xyz);;XSF Files (*.xsf);;NPY Files (*.npy)")
+            fileName, fext = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'STM_'+namez[vv]+"_tip_"+tip_type+"-"+"_WF_"+str(WorkFunction)+"_WF_decay_"+str(round(WF_decay,1))+"_eta_"+str(eta)+'_%03d' %k, "WSxM Files (*.xyz);;XSF Files (*.xsf);;NPY Files (*.npy)")
 
         if fileName:
             if fext == '(*.xsf)':
@@ -135,14 +134,14 @@ class MplCanvas(FigureCanvasQTAgg):
         k = self.parent.Hindx
         mapType = self.parent.map
         if mapType == 'dIdV':
-            fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'didv_'+plotData['namez'][vv]+"_tip_"+plotData['tip_type']+"-"+plotData['tip_orb']+"_WF_"+str(plotData['WorkFunction']-plotData['Voltages'][vv]*plotData['WF_decay'])+"_eta_"+str(eta)+'_%03d.png' %k,"Image files (*.png)")
+            fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'didv_'+plotData['namez'][vv]+"_tip_"+plotData['tip_type']+"-"+"_WF_"+str(plotData['WorkFunction']-plotData['Voltages'][vv]*plotData['WF_decay'])+"_eta_"+str(eta)+'_%03d.png' %k,"Image files (*.png)")
             if fileName:
                 fileName = self.correct_ext(fileName, ".png")
                 print(("saving image to :", fileName))
                 plt.fig = plt.gcf()
                 plt.fig.savefig(fileName)
         else:
-            fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'STM_'+plotData['namez'][vv]+"_tip_"+plotData['tip_type']+"-"+plotData['tip_orb']+"_WF_"+str(plotData['WorkFunction'])+"_WF_decay_"+str(round(plotData['WF_decay'],1))+"_eta_"+str(eta)+'_%03d.png' %k,"Image files (*.png)")
+            fileName, _ = QFileDialog.getSaveFileName(self,"QFileDialog.getSaveFileName()",'STM_'+plotData['namez'][vv]+"_tip_"+plotData['tip_type']+"-"+"_WF_"+str(plotData['WorkFunction'])+"_WF_decay_"+str(round(plotData['WF_decay'],1))+"_eta_"+str(eta)+'_%03d.png' %k,"Image files (*.png)")
             if fileName:
                 fileName = self.correct_ext(fileName, ".png")
                 print(("saving image to :", fileName))
@@ -643,8 +642,6 @@ class Window(QMainWindow):
     def selectONT(self):
         self.myDict['OMP_NUM_THREADS'] = self.ont.value()
     
-    def selectTipOrb(self, tip_orb):
-        self.myDict['tip_orb'] = tip_orb
     
     def selectTipType(self, tip_type):
         self.myDict['tip_type'] = tip_type
@@ -796,6 +793,9 @@ class Window(QMainWindow):
     def plotImage(self, plotData, height, voltage, mapType):
 
         if mapType == 'dIdV':
+            if self.myDict['scan_type'] == 'states':
+                print('Error. Change map type to STM')
+                return None
             if height >= plotData['NoH_didv']:
                 print ('Error. Height out of index')
                 return None
@@ -803,6 +803,9 @@ class Window(QMainWindow):
                 print ('Error. Voltage out of index')
                 return None
         elif mapType == 'STM':
+            if self.myDict['scan_type'] == 'dIdV':
+                print('Error. Change map type to dIdV')
+                return None
             if height >= plotData['NoH_STM']:
                 print ('Error. Height out of index')
                 return None
@@ -813,7 +816,7 @@ class Window(QMainWindow):
         # print "DEBUG: long name:::", namez[vv],';height:%03d;tip:'  %k,tip_type,';',tip_orb
         #name_plot=namez[voltage]+';height:'+str(height)+';tip:'+tip_type+';'+tip_orb
         plt.close()
-        name_plot=plotData['namez'][voltage]+';height:'+str(height)+';tip:'+plotData['tip_type']+';'+plotData['tip_orb']
+        name_plot=plotData['namez'][voltage]+';height:'+str(height)+';tip:'+plotData['tip_type']
         if mapType == 'dIdV':
         # ploting part here:
             plt.figure( figsize=(0.5 * plotData['lvec'][1,0] , 0.5 * plotData['lvec'][2,1] ) )

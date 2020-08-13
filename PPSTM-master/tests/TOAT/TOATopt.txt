@@ -19,5 +19,4 @@ tipOrbS: 1.0
 tipOrbPxy: 0.0
 OMP_NUM_THREADS: 1.0
 tip_type: fixed
-tip_orb: s
 paths: {'inputPath': './tests/TOAT/', 'geometry_file': 'TOAT.xyz', 'cp2kName': 'TOAT'}

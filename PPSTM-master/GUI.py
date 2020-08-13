@@ -427,7 +427,6 @@ class Window(QMainWindow):
         grl6.addWidget(QLabel('         V(min): '))
         self.vMin = QDoubleSpinBox(); grl6.addWidget(self.vMin);
         self.vMin.setRange(-2.0, 2.0); self.vMin.setSingleStep(0.05)
-        self.vMin.valueChanged.connect(self.selectV)
         self.vMin.setValue(-2.0)
         self.num_widgets['V'] = self.vMin
 
@@ -435,7 +434,6 @@ class Window(QMainWindow):
         grl6.addWidget(QLabel('         Vmax: '))
         self.vMax = QDoubleSpinBox(); grl6.addWidget(self.vMax);
         self.vMax.setRange(0.0, 20.0); self.vMax.setSingleStep(0.05)
-        self.vMax.valueChanged.connect(self.selectV)
         self.vMax.setValue(2.0)
         self.num_widgets['Vmax'] = self.vMax
 
@@ -443,10 +441,13 @@ class Window(QMainWindow):
         grl6.addWidget(QLabel('             dV: '))
         self.dv = QDoubleSpinBox(); grl6.addWidget(self.dv);
         self.dv.setRange(0.0, 20.0); self.dv.setSingleStep(0.05)
-        self.dv.valueChanged.connect(self.selectV)
         self.dv.setValue(0.1)
         self.num_widgets['dV'] = self.dv
 
+        self.vMin.valueChanged.connect(self.selectV)
+        self.dv.valueChanged.connect(self.selectV)
+        self.vMax.valueChanged.connect(self.selectV)
+        
     ############# grl7 - grid running layout 7 - Tip orb. s, Tip orb. pxy, OMP_NUM_THREADS ###########
 
         grl7 = QHBoxLayout(); controlLayout.addLayout(grl7);

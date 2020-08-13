@@ -163,20 +163,20 @@ class Window(QMainWindow):
                        'spin': None,
                        'pbc': '00',
                        'data_format': 'xsf',
-                       'kValue': 0.0,
+                       'kValue': 0.24,
                        'qValue': 0.0,
-                       'x': [0.0,0.0,0.0],
-                       'y': [0.0,0.0,0.0],
-                       'z': [0.0,0.0,0.0],
+                       'x': [0.0,20.0,0.1],
+                       'y': [0.0,20.0,0.1],
+                       'z': [5.0,6.0,1.0],
                        'scan_type': 'dIdV',
-                       'etaValue': 0.0,
+                       'etaValue': 0.1,
                        'wf_decay': 0.0,
-                       'V': 0.0,
-                       'Vmax': 0.0,
-                       'dV': 0.0,
-                       'tipOrbS': 0.0,
-                       'tipOrbPxy': 0.0,
-                       'OMP_NUM_THREADS': 0,
+                       'V': -2.0,
+                       'Vmax': 2.0,
+                       'dV': 0.1,
+                       'tipOrbS': 0.13,
+                       'tipOrbPxy': 0.87,
+                       'OMP_NUM_THREADS': 1,
                        'tip_type': 'fixed',}
             
         self.importData = None
@@ -267,18 +267,21 @@ class Window(QMainWindow):
         # Creating input files path text box 
         # In this case self is needed in order to reference later to the written text inside.
         self.path_inputFiles = QLineEdit(); pathBox.addWidget(self.path_inputFiles)
-        
+        self.path_inputFiles.setText('./')
+
         # Adding geometry_file text box to the layout
         geometryBox = QVBoxLayout(); inputLayout2.addLayout(geometryBox)
         geometryBox.addWidget(QLabel("Geometry file name"))
         # Creating geometry file path text box
         self.geometryFile = QLineEdit(); geometryBox.addWidget(self.geometryFile)
+        self.geometryFile.setText('input.xyz')
 
         # Adding CP2K/GPAW name text box to the layout
         nameBox = QVBoxLayout(); inputLayout2.addLayout(nameBox)
         nameBox.addWidget(QLabel("CP2K/GPAW name"))
         # Creating name text box
         self.name = QLineEdit(); nameBox.addWidget(self.name)
+        self.name.setText('none')
 
         # Button importing packages and everything
         importButton = QPushButton("Import"); inputLayout2.addWidget(importButton)
@@ -306,6 +309,7 @@ class Window(QMainWindow):
         self.k = QDoubleSpinBox(); grl1.addWidget(self.k);
         self.k.setRange(0.0, 2.0); self.k.setSingleStep(0.05)
         self.k.valueChanged.connect(self.selectK)
+        self.k.setValue(0.24)
         self.num_widgets['kValue'] = self.k
 
         # Adding Q number range
@@ -329,12 +333,14 @@ class Window(QMainWindow):
         grl2.addWidget(QLabel('         Xmax: '))
         self.xMax = QDoubleSpinBox(); grl2.addWidget(self.xMax);
         self.xMax.setRange(0.0, 50.0); self.xMax.setSingleStep(0.05)
+        self.xMax.setValue(20.0)
         self.xMax.valueChanged.connect(self.selectX)
 
         # Adding dX number range
         grl2.addWidget(QLabel('             dX: '))
         self.dx = QDoubleSpinBox(); grl2.addWidget(self.dx);
         self.dx.setRange(0.0, 20.0); self.dx.setSingleStep(0.05)
+        self.dx.setValue(0.1)
         self.dx.valueChanged.connect(self.selectX)
 
     ############# grl3 - grid running layout 3 - Ymin, Ymax, dY ########################
@@ -351,12 +357,14 @@ class Window(QMainWindow):
         grl3.addWidget(QLabel('         Ymax: '))
         self.yMax = QDoubleSpinBox(); grl3.addWidget(self.yMax);
         self.yMax.setRange(0.0, 50.0); self.yMax.setSingleStep(0.05)
+        self.yMax.setValue(20.0)
         self.yMax.valueChanged.connect(self.selectY)
 
         # Adding dY number range
         grl3.addWidget(QLabel('             dY: '))
         self.dy = QDoubleSpinBox(); grl3.addWidget(self.dy);
         self.dy.setRange(0.0, 20.0); self.dy.setSingleStep(0.05)
+        self.dy.setValue(0.1)
         self.dy.valueChanged.connect(self.selectY)
 
     ############# grl4 - grid running layout 4 - Zmin, Zmax, dZ #########################
@@ -367,18 +375,21 @@ class Window(QMainWindow):
         grl4.addWidget(QLabel('         Zmin: '))
         self.zMin = QDoubleSpinBox(); grl4.addWidget(self.zMin);
         self.zMin.setRange(-50.0, 20.0); self.zMin.setSingleStep(0.05)
+        self.zMin.setValue(5.0)
         self.zMin.valueChanged.connect(self.selectZ)
 
         # Adding Zmax number range
         grl4.addWidget(QLabel('         Zmax: '))
         self.zMax = QDoubleSpinBox(); grl4.addWidget(self.zMax);
         self.zMax.setRange(0.0, 50.0); self.zMax.setSingleStep(0.05)
+        self.zMax.setValue(6.0)
         self.zMax.valueChanged.connect(self.selectZ)
 
         # Adding dZ number range
         grl4.addWidget(QLabel('             dZ: '))
         self.dz = QDoubleSpinBox(); grl4.addWidget(self.dz);
         self.dz.setRange(0.0, 20.0); self.dz.setSingleStep(0.05)
+        self.dz.setValue(1.0)
         self.dz.valueChanged.connect(self.selectZ)
 
     ############# grl5 - grid running layout 5  - Scan Type, Eta, WF_decay ##################
@@ -398,6 +409,7 @@ class Window(QMainWindow):
         self.eta = QDoubleSpinBox(); grl5.addWidget(self.eta);
         self.eta.setRange(0.0, 20.0); self.eta.setSingleStep(0.05)
         self.eta.valueChanged.connect(self.selectEta)
+        self.eta.setValue(0.1)
         self.num_widgets['etaValue'] = self.eta
 
         # Adding WF_decay number range (wfd)
@@ -416,6 +428,7 @@ class Window(QMainWindow):
         self.vMin = QDoubleSpinBox(); grl6.addWidget(self.vMin);
         self.vMin.setRange(-2.0, 2.0); self.vMin.setSingleStep(0.05)
         self.vMin.valueChanged.connect(self.selectV)
+        self.vMin.setValue(-2.0)
         self.num_widgets['V'] = self.vMin
 
         # Adding Vmax number range
@@ -423,6 +436,7 @@ class Window(QMainWindow):
         self.vMax = QDoubleSpinBox(); grl6.addWidget(self.vMax);
         self.vMax.setRange(0.0, 20.0); self.vMax.setSingleStep(0.05)
         self.vMax.valueChanged.connect(self.selectV)
+        self.vMax.setValue(2.0)
         self.num_widgets['Vmax'] = self.vMax
 
         # Adding dV number range
@@ -430,6 +444,7 @@ class Window(QMainWindow):
         self.dv = QDoubleSpinBox(); grl6.addWidget(self.dv);
         self.dv.setRange(0.0, 20.0); self.dv.setSingleStep(0.05)
         self.dv.valueChanged.connect(self.selectV)
+        self.dv.setValue(0.1)
         self.num_widgets['dV'] = self.dv
 
     ############# grl7 - grid running layout 7 - Tip orb. s, Tip orb. pxy, OMP_NUM_THREADS ###########
@@ -441,13 +456,15 @@ class Window(QMainWindow):
         self.orbS = QDoubleSpinBox(); grl7.addWidget(self.orbS);
         self.orbS.setRange(-2.0, 2.0); self.orbS.setSingleStep(0.05)
         self.orbS.valueChanged.connect(self.selectTipOrbS)
+        self.orbS.setValue(0.13)
         self.num_widgets['tipOrbS'] = self.orbS
 
         # Adding Vmax number range
         grl7.addWidget(QLabel('                 Tip orb. pxy:   '))
         self.orbPxy = QDoubleSpinBox(); grl7.addWidget(self.orbPxy);
-        self.orbPxy.setRange(0.0, 20.0); self.orbPxy.setSingleStep(0.05)
+        self.orbPxy.setRange(-2.0, 20.0); self.orbPxy.setSingleStep(0.05)
         self.orbPxy.valueChanged.connect(self.selectTipOrbPxy)
+        self.orbPxy.setValue(0.87)
         self.num_widgets['tipOrbPxy'] = self.orbPxy
 
         # Adding dV number range
@@ -455,6 +472,7 @@ class Window(QMainWindow):
         self.ont = QSpinBox(); grl7.addWidget(self.ont);
         self.ont.setRange(0, 20); self.ont.setSingleStep(1)
         self.ont.valueChanged.connect(self.selectONT)
+        self.ont.setValue(1)
         self.num_widgets['OMP_NUM_THREADS'] = self.ont
 
     ############# grl8 - grid running layout 8 - Tip Orb. , Tip type, Run button ###############
@@ -639,7 +657,7 @@ class Window(QMainWindow):
     def selectHindx(self):
         self.Hindx = self.hIndx.value()
 
-############################# Button methods (more complex) ####################################
+############################# Button methods (import, load, run, show) ####################################
 
     def imported(self):
         # check if path to input files is given, if not give error and do not let to run
@@ -650,7 +668,6 @@ class Window(QMainWindow):
         if len(inputPath) == 0 or len(cp2kName) == 0 or len(geometry_file) == 0:
             print ('Path/name/file not given')
             return 
-
 
         self.paths = {'inputPath': inputPath, 
                       'geometry_file': geometry_file,

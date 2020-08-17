@@ -65,7 +65,7 @@ class MplCanvas(FigureCanvasQTAgg):
         if fileName:
             if fext == '(*.xsf)':
                 print("For XSF or NPY outputs or tip_type = relaxed you have to have installed PPAFM in your PPSTM directory ")
-                import pyProbeParticle.GridUtils as GU
+                import pyPPSTM.GridUtils as GU
                 print("writing XSF files")
                 geom_plot = self.parent.plotData['geom_plot']
                 lvec = self.parent.plotData['lvec']
@@ -80,7 +80,7 @@ class MplCanvas(FigureCanvasQTAgg):
 
             elif fext == '(*.npy)':
                 print("For XSF or NPY outputs or tip_type = relaxed you have to have installed PPAFM in your PPSTM directory ")
-                import pyProbeParticle.GridUtils as GU
+                import pyPPSTM.GridUtils as GU
                 print("writing npy binary files")
                 lvec = self.parent.plotData['lvec']
                 if mapType == 'dIdV':

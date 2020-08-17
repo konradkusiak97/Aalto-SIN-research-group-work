@@ -59,7 +59,7 @@ matplotlib.use('Agg') # Force matplotlib to not use any Xwindows backend. ## !!!
 import matplotlib.pyplot as plt
 print("For XSF or NPY outputs and inputs you have to have installed PPAFM in your PPSTM directory ")
 import pyPPSTM.ReadSTM           as RS
-import pyProbeParticle.GridUtils as GU
+import pyPPSTM.GridUtils as GU
 if (plot_atoms):
     import pyPPSTM.basUtils as Bu
     import pyPPSTM.elements as elements

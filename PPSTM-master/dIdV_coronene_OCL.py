@@ -5,7 +5,7 @@ import numpy as np
 import sys
 sys.path.append('./')
 
-import pyProbeParticle.GridUtils as GU
+import pyPPSTM.GridUtils as GU
 import pyPPSTM.ReadSTM           as RS
 import pyPPSTM.OCL               as ocl
 

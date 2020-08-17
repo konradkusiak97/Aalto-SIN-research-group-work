@@ -27,9 +27,9 @@ print >> f, "  ---- The eigen values (Fermi = ", calc.get_fermi_level() ,"eV) --
 npy.savetxt(f,eig,fmt="%0.4f")
 f.close
 
-print "n_at = ", n_at
-print "n_bands = " , n_bands
-print "eig:", eig
+print ("n_at = ", n_at)
+print ("n_bands = " , n_bands)
+print ("eig:", eig)
 
 # s-orb
 X=npy.zeros((n_bands,n_at*2+1))
@@ -126,4 +126,4 @@ npy.savetxt(f,X,fmt="%4.2f")
 f.close()
 '''
 
-print "wave function written, keep on rocking"
+print ("wave function written, keep on rocking")

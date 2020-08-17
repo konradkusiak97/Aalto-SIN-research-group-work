@@ -22,7 +22,7 @@ def importData(myDict, paths):
     cp2k_name = paths['cp2kName']  # Name used in CP2K calculations or GPAW calc #
     if cp2k_name == 'none': cp2k_name = None
     
-    cut_atoms = -1         # None = -1 -- All atoms of the sample contributes to tunelling ; 1 -- only 1st atom of the sample contributes to the tunelling ; 57 -- first 57 atoms of the sample contributes to the tunelling ; ... #
+    cut_atoms = 57         # None = -1 -- All atoms of the sample contributes to tunelling ; 1 -- only 1st atom of the sample contributes to the tunelling ; 57 -- first 57 atoms of the sample contributes to the tunelling ; ... #
     lower_atoms = []             # [] = None -- No atoms has lowered hopping ; be aware python numbering occurs here: [0] - means lowering of the 1st atom; [0,1,2,3] -- lowering of 1st 4 atoms ... #
     lower_coefs = []             # [] = None -- No lowering of the hoppings  ; [0.5] -- lowering of the 1st atom hopping to 0.5                           ; [0.5,0.5,0.5,0.5] -- lowering of 1st 4 atoms to 0.5 ... #
     
@@ -192,7 +192,7 @@ def newPPSTM_simple(myDict, paths, importData):
 
     if (tip_type == 'relaxed') or (tip_type == 'r'):
         print("For XSF or NPY outputs or tip_type = relaxed you have to have installed PPAFM in your PPSTM directory ")
-        import pyProbeParticle.GridUtils as GU
+        from . import GridUtils as GU
     
     print("Libraries imported")
     # --- Initial check --- #
@@ -306,6 +306,7 @@ def newPPSTM_simple(myDict, paths, importData):
     namez = []
     for V in Voltages:
         namez.append(str(round(V,round_index)))
+        
     plotData = {}
     plotData['NoV_didv'] = 0
     plotData['NoH_didv'] = 0
